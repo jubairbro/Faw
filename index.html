@@ -299,7 +299,7 @@
     </button>
 
     <!-- Audio Element -->
-    <audio id="bgm" loop>
+    <audio id="bgm" loop autoplay>
         <source src="https://github.com/jubairbro/Faw/raw/refs/heads/main/audio.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
@@ -369,7 +369,7 @@
                 Want to connect, share ideas, or ask a question? Reach out through any of the channels below. I'm always excited to hear from my community!
             </p>
             <div class="contact-list">
-                <a href="https://t.me/Jubairbro_bot" class="contact-btn telegram-btn" target="_blank">
+                <a href="https://t.me/Jubairbro_bot" class=" consign-btn telegram-btn" target="_blank">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
                     </svg>
@@ -419,7 +419,7 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * -canvas.height;
-                this.length = Math.random() * 20 + 10;
+                this.length39 = Math.random() * 20 + 10;
                 this.speed = Math.random() * 10 + 4;
                 this.width = Math.random() * 2 + 1;
             }
@@ -514,10 +514,18 @@
         const musicOnIcon = musicToggle.querySelector('.music-on-icon');
         const musicOffIcon = musicToggle.querySelector('.music-off-icon');
 
-        // Play audio by default
-        audio.play().catch(error => {
-            console.log("Autoplay prevented:", error);
-        });
+        // Attempt to play audio on page load
+        function tryPlayAudio() {
+            audio.play().catch(error => {
+                console.log("Autoplay prevented:", error);
+                // Retry after a short delay or on user interaction
+                document.addEventListener('click', tryPlayAudio, { once: true });
+                document.addEventListener('touchstart', tryPlayAudio, { once: true });
+            });
+        }
+
+        // Trigger autoplay on page load
+        document.addEventListener('DOMContentLoaded', tryPlayAudio);
 
         function toggleMusic() {
             if (audio.paused) {
