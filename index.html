@@ -50,7 +50,7 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            opacity: 0.8; /* Increased opacity */
+            opacity: 0.8;
             pointer-events: none;
         }
 
@@ -120,6 +120,41 @@
         .theme-toggle svg {
             width: 20px;
             height: 20px;
+        }
+
+        /* Music Toggle */
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px; /* Opposite to theme toggle */
+            width: 40px;
+            height: 40px;
+            background: #6b48ff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease, transform 0.3s ease;
+            z-index: 3;
+            padding: 0;
+        }
+
+        .music-toggle:hover {
+            background: #ff6b6b;
+            transform: scale(1.1);
+        }
+
+        .music-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Audio Element */
+        audio {
+            display: none;
         }
 
         /* Link List */
@@ -240,14 +275,34 @@
             .profile-img { width: 100px; height: 100px; }
             h2 { font-size: 1.8rem; }
             p { font-size: 1rem; }
-            .theme-toggle { width: 35px; height: 35px; }
-            .theme-toggle svg { width: 18px; height: 18px; }
+            .theme-toggle, .music-toggle { width: 35px; height: 35px; }
+            .theme-toggle svg, .music-toggle svg { width: 18px; height: 18px; }
         }
     </style>
 </head>
-<body class="dark-mode"> <!-- Default Dark Mode -->
+<body class="dark-mode">
     <!-- Rain Animation Canvas -->
     <canvas id="rain-canvas"></canvas>
+
+    <!-- Music Toggle Button -->
+    <button class="music-toggle" onclick="toggleMusic()">
+        <svg class="music-on-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+        </svg>
+        <svg class="music-off-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+            <path d="M9 18V5l12-2v13M3 3l18 18"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+        </svg>
+    </button>
+
+    <!-- Audio Element -->
+    <audio id="bgm" loop>
+        <source src="https://github.com/jubairbro/Faw/raw/refs/heads/main/audio.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
 
     <!-- Theme Toggle Button -->
     <button class="theme-toggle" onclick="toggleTheme()">
@@ -358,7 +413,7 @@
 
         const drops = [];
         const spots = [];
-        const numDrops = 200; // Increased number of drops
+        const numDrops = 200;
 
         class Drop {
             constructor() {
@@ -382,7 +437,7 @@
                 ctx.beginPath();
                 ctx.moveTo(this.x, this.y);
                 ctx.lineTo(this.x, this.y + this.length);
-                ctx.strokeStyle = 'rgba(0, 136, 204, 0.8)'; // Enhanced blue with higher opacity
+                ctx.strokeStyle = 'rgba(0, 136, 204, 0.8)';
                 ctx.lineWidth = this.width;
                 ctx.stroke();
             }
@@ -392,8 +447,8 @@
             constructor(x, y) {
                 this.x = x;
                 this.y = y;
-                this.radius = Math.random() * 10 + 5; // Larger spots
-                this.opacity = 0.7; // Higher initial opacity
+                this.radius = Math.random() * 10 + 5;
+                this.opacity = 0.7;
             }
 
             fade() {
@@ -405,7 +460,7 @@
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 136, 204, ${this.opacity})`; // Blue water spots
+                ctx.fillStyle = `rgba(0, 136, 204, ${this.opacity})`;
                 ctx.fill();
             }
         }
@@ -450,6 +505,29 @@
                 body.classList.add('dark-mode');
                 sunIcon.style.display = 'none';
                 moonIcon.style.display = 'block';
+            }
+        }
+
+        // Audio Control
+        const audio = document.getElementById('bgm');
+        const musicToggle = document.querySelector('.music-toggle');
+        const musicOnIcon = musicToggle.querySelector('.music-on-icon');
+        const musicOffIcon = musicToggle.querySelector('.music-off-icon');
+
+        // Play audio by default
+        audio.play().catch(error => {
+            console.log("Autoplay prevented:", error);
+        });
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                musicOnIcon.style.display = 'block';
+                musicOffIcon.style.display = 'none';
+            } else {
+                audio.pause();
+                musicOnIcon.style.display = 'none';
+                musicOffIcon.style.display = 'block';
             }
         }
 
