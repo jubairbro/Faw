@@ -1,3 +1,5 @@
+#i want to see you.....
+#Jubair bro
 import socket, threading, select, signal, sys, time, getopt, base64
 
 # Listen
@@ -14,7 +16,7 @@ BUFLEN = 4096 * 4
 TIMEOUT = 60
 DEFAULT_HOSTS = ['127.0.0.1:109', '127.0.0.1:2223', '127.0.0.1:2222', '127.0.0.1:1194']
 
-# এনকোডেড RESPONSE (base64)
+# এনকোডেড RESPONSE 
 ENCODED_RESPONSE = 'SFRUUC8xLjEgMTAxIDxiPjxmb250IGNvbG9yPSJncmVlbiI+UHJlbWl1bSBTY3JpcHQ8L2ZvbnQ+IDxmb250IGNvbG9yPSJyZWQiPmJ5IDo8L2ZvbnQ+IDxmb250IGNvbG9yPSJ5ZWxsb3ciPkBKdWJhaXJGRjwvZm9udD48L2I+DXJcbkNvbW5lY3Rpb246IFVwZ3JhZGUdDXJcbk1ldGhvZDogV2Vic29ja2V0DXJcbk1ldGhvZC1BY2NlcHQ6IGZvbw0NCg=='
 
 # RESPONSE ডিকোড করা
