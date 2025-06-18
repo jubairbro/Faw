@@ -1,6 +1,4 @@
-#i want to see you.....
-#Jubair bro
-import socket, threading, select, signal, sys, time, getopt, base64
+import socket, threading, select, signal, sys, time, getopt
 
 # Listen
 LISTENING_ADDR = '0.0.0.0'
@@ -15,12 +13,7 @@ PASS = ''
 BUFLEN = 4096 * 4
 TIMEOUT = 60
 DEFAULT_HOSTS = ['127.0.0.1:109', '127.0.0.1:2223', '127.0.0.1:2222', '127.0.0.1:1194']
-
-# এনকোডেড RESPONSE 
-ENCODED_RESPONSE = 'SFRUUC8xLjEgMTAxIDxiPjxmb250IGNvbG9yPSJncmVlbiI+UHJlbWl1bSBieTwvZm9udD4gPGZvbnQgY29sb3I9InJlZCI+OjwvZm9udD4gPGZvbnQgY29sb3I9InllbGxvdyI+QEp1YmFpclNlbnNpPC9mb250PjwvYj5cclxuVXBncmFkZTogd2Vic29ja2V0XHJcbkNvbm5lY3Rpb246IFVwZ3JhZGVcclxuU2VjLVdlYlNvY2tldC1BY2NlcHQ6IGZvb1xyXG5cclxu'
-
-# RESPONSE ডিকোড করা
-RESPONSE = base64.b64decode(ENCODED_RESPONSE).decode()
+RESPONSE = 'HTTP/1.1 101 <b><font color="green">Premium by</font> <font color="red">:</font> <font color="yellow">@JubairSensi</font></b>\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: foo\r\n\r\n'
 
 class Server(threading.Thread):
     def __init__(self, host, ports):
@@ -265,6 +258,6 @@ def main(host=LISTENING_ADDR, ports=LISTENING_PORTS):
             server.close()
             break
 
+#######    parse_args(sys.argv[1:])
 if __name__ == '__main__':
-    parse_args(sys.argv[1:])
     main()
